@@ -14,11 +14,21 @@ const route = express.Router();
 
 route.get("/", async (req, res, next) => {
   try {
-  } catch (error) {}
+    const artics = await Article.find();
+
+    res.status(201).send(artics);
+  } catch (error) {
+    console.log(error);
+  }
 });
 route.get("/:id", async (req, res, next) => {
   try {
-  } catch (error) {}
+    const artic = await Article.findById(req.params.id);
+
+    res.status(201).send(artic);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 route.post("/", async (req, res, next) => {
@@ -32,13 +42,30 @@ route.post("/", async (req, res, next) => {
     console.log(error);
   }
 });
+
 route.put("/:id", async (req, res, next) => {
   try {
-  } catch (error) {}
+    const modifiedArtic = await Article.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+
+    res.status(200).send(modifiedArtic);
+  } catch (error) {
+    console.log(error);
+  }
 });
 route.delete("/:id", async (req, res, next) => {
   try {
-  } catch (error) {}
+    const deletedArtic = await Article.findByIdAndDelete(req.params.id);
+    res.status(200).send("DELETED");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = route;
