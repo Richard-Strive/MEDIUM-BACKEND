@@ -6,6 +6,10 @@ const ArticleSchema = new Schema(
     subHead: String,
     content: String,
     category: String,
+    category: {
+      name: String,
+      img: String,
+    },
     author: {
       name: String,
       img: String,
