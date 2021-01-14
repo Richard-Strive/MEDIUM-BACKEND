@@ -14,6 +14,7 @@ const {
 } = require("./problematicRoutes/errorHandling.js");
 
 const articleRoute = require("./routes/article.js");
+const authorRoute = require("./routes/author/author");
 
 const server = express();
 server.use(cors());
@@ -22,6 +23,7 @@ const port = process.env.PORT || 5001;
 
 server.use(express.json());
 server.use("/articles", articleRoute);
+server.use("/authors", authorRoute);
 
 /*<---------
 mettere qui gli endpoints con la sintassi e.g:

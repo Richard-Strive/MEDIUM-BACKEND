@@ -27,7 +27,7 @@ route.get("/", async (req, res, next) => {
 });
 route.get("/:id", async (req, res, next) => {
   try {
-    const artic = await Article.findById(req.params.id);
+    const artic = await Article.findById(req.params.id).populate("author");
 
     res.status(201).send(artic);
   } catch (error) {
@@ -55,6 +55,7 @@ route.put("/:id", async (req, res, next) => {
       {
         runValidators: true,
         new: true,
+        useFindAndModify: false,
       }
     );
 
@@ -116,7 +117,9 @@ route.delete("/:id/reviews/:id2", async (req, res, next) => {
         },
       },
       {
+        runValidators: true,
         new: true,
+        useFindAndModify: true,
       }
     );
 
@@ -148,6 +151,7 @@ route.put("/:id/reviews/:id2", async (req, res, next) => {
         {
           runValidators: true,
           new: true,
+          useFindAndModify: false,
         }
       );
       res.status(201).send(updatedReview);
@@ -172,10 +176,33 @@ route.post("/:id/reviews", async (req, res, next) => {
       {
         runValidators: true,
         new: true,
+        useFindAndModify: false,
       }
     );
 
     res.status(201).send(updateArticles);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.post("/:id/add-authors/:id2", async (req, res, next) => {
+  try {
+    updatedArticle = await Article.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          author: req.params.id2,
+        },
+      },
+      {
+        runValidators: true,
+        new: true,
+        useFindAndModify: false,
+      }
+    );
+
+    res.status(201).send(updatedArticle);
   } catch (error) {
     console.log(error);
   }

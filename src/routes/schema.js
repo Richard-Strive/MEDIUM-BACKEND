@@ -10,10 +10,12 @@ const ArticleSchema = new Schema(
       name: String,
       img: String,
     },
-    author: {
-      name: String,
-      img: String,
-    },
+    author: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Author",
+      },
+    ],
     reviews: [
       {
         text: String,
@@ -47,4 +49,8 @@ module.exports = model("Article", ArticleSchema);
     ],
   "cover": "random stufffffs"
 }
+
+{ type: Schema.Types.ObjectId, ref: "Author" }
+
+
  */
